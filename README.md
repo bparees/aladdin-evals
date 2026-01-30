@@ -44,12 +44,12 @@ oc adm policy add-cluster-role-to-user cluster-admin user1
 ```bash
 oc login -u user1 -p <somepassword>
 
-# get the token for the new admin user
+# get the token for the new admin user (you'll need this value later)
 oc whoami -t
 ```
 
 #### Expose a route for the LCORE service
-This will allow the lightspeed-eval tool to make direct queries to the LCORE apis outside the cluster.
+This will allow the lightspeed-eval tool to make direct queries to the LCORE apis from outside the cluster.
 
 ```bash
 oc apply -f -
@@ -88,7 +88,7 @@ export API_KEY="your-cluster-api-key"
 
 #### Configure Your API Endpoint
 
-Edit `system.yaml` and update these fields:
+Edit `eval/system.yaml` and update these fields:
 
 ```yaml
 api:
@@ -97,7 +97,7 @@ api:
   model: "gpt-4o-mini"                            # Your model name
 ```
 
-You can get the lcore route hostname (created above) via: 
+You can get the lcore route hostname (created earlier) via: 
 ```bash
 oc get route lightspeed-core -n openshift-aladdin
 ```
@@ -107,11 +107,11 @@ oc get route lightspeed-core -n openshift-aladdin
 If you have not done so previously, clone the lightspeed-eval repo:
 https://github.com/lightspeed-core/lightspeed-evaluation
 
-Note: As of this writing the current version of the eval tool does not parse tool_calls from the latest LCORE version correctly.  This PR addresses the issue: https://github.com/lightspeed-core/lightspeed-evaluation/pull/150
-So if you want to see tool_call data, you need to pick up that patch in your local lightspeed-evaluation repo.
+Note: As of this writing the current version of the eval tool does not parse tool_calls from the latest LCORE version correctly.  This PR addresses the issue: https://github.com/lightspeed-core/lightspeed-evaluation/pull/150, so if you want to see tool_call data, you need to pick up that patch in your local `lightspeed-evaluation` repo.
 
+Note2: As of this writing the current version of the eval tool does not have the ability to evaluate tool_call responses.  This PR proposes an implementation to address the issue: https://github.com/lightspeed-core/lightspeed-evaluation/pull/151
 
-From the lightspeed-eval repository root:
+From the `lightspeed-evaluation` repository root, run:
 
 ```bash
 uv run lightspeed-eval --system-config <path-to-aladdin-evals-repo>/eval/system.yaml --eval-data <path-to-aladdin-evals-repo>/eval/evaluation_data.yaml --output-dir <path-to-aladdin-evals-repo>/eval/output
@@ -119,8 +119,8 @@ uv run lightspeed-eval --system-config <path-to-aladdin-evals-repo>/eval/system.
 
 ## Files
 
-- `system.yaml` - System configuration (LLM settings, API endpoint, metrics, output)
-- `evaluation_data.yaml` - Test cases with queries and expected responses
+- `eval/system.yaml` - System configuration (LLM settings, API endpoint, metrics, output)
+- `eval/evaluation_data.yaml` - Test cases with queries and expected responses
 
 ## Adding More Test Cases
 
