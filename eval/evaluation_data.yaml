@@ -34,6 +34,7 @@
               data: NAMESPACE.*
               data_type: pods_list_in_namespace
               server_label: ngui
+            result: \"component\":\"table\"
       turn_metrics:
         - ragas:response_relevancy
         - custom:answer_correctness
