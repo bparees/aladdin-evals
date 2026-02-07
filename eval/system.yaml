@@ -3,15 +3,15 @@
 
 # Core evaluation parameters
 core:
-  max_threads: 10              # Number of concurrent evaluations
-  fail_on_invalid_data: true   # Fail on invalid conversations
-  skip_on_failure: false       # Continue evaluating if a turn fails
+  max_threads: 10 # Number of concurrent evaluations
+  fail_on_invalid_data: true # Fail on invalid conversations
+  skip_on_failure: false # Continue evaluating if a turn fails
 
 # LLM as a Judge configuration
 # This LLM evaluates the quality of responses
 llm:
-  provider: "openai"           # LLM Provider for judge (openai, watsonx, gemini, hosted_vllm)
-  model: "gpt-4o-mini"         # Model name for evaluation
+  provider: "openai" # LLM Provider for judge (openai, watsonx, gemini, hosted_vllm)
+  model: "gpt-4o-mini" # Model name for evaluation
   ssl_verify: true
   temperature: 0.0
   max_tokens: 512
@@ -31,15 +31,15 @@ embedding:
 # API Configuration - connects to your Aladdin endpoint
 # The API generates responses to evaluate
 api:
-  enabled: true                           # Set to false for static data evaluation
-  api_base: "https://lightspeed-core-openshift-aladdin.apps.bparees.devcluster.openshift.com"       # TODO: Replace with your API endpoint
+  enabled: true # Set to false for static data evaluation
+  api_base: "https://lightspeed-core-openshift-aladdin.apps.<your-cluster-domain>" # TODO: Replace with your cluster route
   version: v1
-  endpoint_type: streaming                # Use "streaming" or "query"
+  endpoint_type: streaming # Use "streaming" or "query"
   timeout: 300
 
   # Model configuration for API queries
-  provider: "openai"                      # TODO: Update if needed
-  model: "gpt-4o-mini"                    # TODO: Update if needed
+  provider: "openai" # TODO: Update if needed
+  model: "gpt-4o-mini" # TODO: Update if needed
   no_tools: null
   system_prompt: null
 
@@ -65,8 +65,8 @@ metrics_metadata:
 
     "custom:tool_eval":
       description: "Tool call evaluation comparing expected vs actual tool calls"
-      ordered: true       # true (default): sequence order matters, false: any order allowed
-      full_match: true    # true (default): exact 1:1 match, false: expected tools found in actual (extras allowed)
+      ordered: true # true (default): sequence order matters, false: any order allowed
+      full_match: true # true (default): exact 1:1 match, false: expected tools found in actual (extras allowed)
 
 # Output Configuration
 output:

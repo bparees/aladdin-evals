@@ -41,6 +41,23 @@
         - custom:tool_eval
       turn_metrics_metadata:
         custom:answer_correctness:
-          threshold: 0.7  # Override default threshold for this turn
+          threshold: 0.7 # Override default threshold for this turn
         ragas:response_relevancy:
-          threshold: 0.7  # Override default threshold (0.8) for this turn
+          threshold: 0.7 # Override default threshold (0.8) for this turn
+
+- conversation_group_id: test_cluster_cpu_usage
+  description: Test querying cluster CPU usage
+  tag: monitoring
+
+  conversation_metrics: []
+  conversation_metrics_metadata: {}
+
+  turns:
+    - turn_id: turn_1
+      query: "show me cpu usage of my cluster"
+      expected_response: |
+        Here is the CPU usage of your cluster showing node CPU usage 
+        and pod CPU usage with metrics.
+      turn_metrics:
+        - ragas:response_relevancy
+        - custom:answer_correctness
